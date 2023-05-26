@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
@@ -40,17 +42,12 @@ public class BoardController implements ControllerImpl<Board> {
         return mapper.writeValueAsString(object);
     }
 
-//    private String mapper(Object object, String field) throws JsonProcessingException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-//        return mapper.writer(filter(field)).writeValueAsString(object);
-//    }
-
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String findAll() throws JsonProcessingException {
         List<Board> boardList = service.findAll();
         rmf.setPayload(boardList);
+//        FilterProvider provider = filter("payload");
         return mapper(rmf);
     }
 

@@ -9,9 +9,16 @@ spring:
   config:
     import: 'classpath:/application-secret.yml'
 
+  main:
+    allow-bean-definition-overriding: true
+#    web-application-type: reactive
+
   devtools:
     livereload:
       enabled: true
+
+  web-flux:
+    base-path: /v1/api
 
   jackson:
     default-property-inclusion: non_null
@@ -25,3 +32,8 @@ server:
     include-stacktrace: always
     whitelabel:
       enabled: false
+
+custom:
+  reactive: false
+  mvc:
+    enabled: false
