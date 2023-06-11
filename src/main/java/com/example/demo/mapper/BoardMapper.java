@@ -20,7 +20,7 @@ public interface BoardMapper {
     @Insert("INSERT INTO board (title, content, author) VALUES (#{title},#{content},#{author})")
     public void insert(Board board);
 
-    @Update("UPDATE TABLE board SET title=#{title}, content=#{content}, author=#{author}")
+    @Update("UPDATE TABLE board SET title=#{title}, content=#{content}, author=#{author} WHERE id=#{id}}")
     public void update(int id, Board board);
 
     @Delete("DELETE FROM board WHERE id=#{id}")

@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -44,11 +45,13 @@ public class BoardController implements ControllerImpl<Board> {
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public String findAll() throws JsonProcessingException {
+    public Mono<String> findAll() throws JsonProcessingException {
         List<Board> boardList = service.findAll();
         rmf.setPayload(boardList);
+//        System.out.println(mapper(rmf));
+        return Mono.just(mapper(rmf));
 //        FilterProvider provider = filter("payload");
-        return mapper(rmf);
+//        return mapper(rmf);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -72,6 +75,9 @@ public class BoardController implements ControllerImpl<Board> {
     @PostMapping("")
     @Override
     public String insert(Board board) throws JsonProcessingException {
+        System.out.println(board.getTitle());
+        System.out.println(board.getContent());
+        System.out.println(board.getAuthor());
         service.insert(board);
 
         return null;
